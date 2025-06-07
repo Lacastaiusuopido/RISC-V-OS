@@ -1,7 +1,7 @@
 #include "ulib.h"
 int main() {
     printf("基本测试: Hello, RISC-V OS!\n");
-    
+    /*
     // 测试整数
     printf("整数测试: %d\n", 12345);
     printf("负数测试: %d\n", -9876);
@@ -45,7 +45,7 @@ int main() {
     for (int i = 0; i < 10; i++) {
         printf("%d ", i);
     }
-    printf("\n");
+    printf("\n");*/
     
     return 0;
 }

@@ -2,10 +2,35 @@
 #include "../include/uart.h"
 #include "../include/types.h"
 
+/* ========== 日志模块实现 ========== */
+#define IMPLEMENT_LOG_MODULE(name, prefix, enabled) \
+    void console_printf_##name(const char *fmt, ...) { \
+        if (enabled) { \
+            va_list args; \
+            va_start(args, fmt); \
+            console_printf("%s", prefix); \
+            console_vprintf(fmt, args); \
+            va_end(args); \
+        } \
+    }
+
+// 实际模块配置
+IMPLEMENT_LOG_MODULE(MAIN, "[MAIN] ", 0)
+IMPLEMENT_LOG_MODULE(TRAP, "[TRAP] ", 1)
+IMPLEMENT_LOG_MODULE(SYSCALL, "[SYSCALL] ", 0)
+IMPLEMENT_LOG_MODULE(TIMER, "[TIMER] ", 0)
+IMPLEMENT_LOG_MODULE(PAGE, "[PAGE] ", 0)
+IMPLEMENT_LOG_MODULE(QEMU, "[QEMU] ", 0)
+IMPLEMENT_LOG_MODULE(PANIC, "[PANIC] ", 1)
+
+
+#undef IMPLEMENT_LOG_MODULE
+
 // 初始化控制台
 void console_init() {
     uart_init();
 }
+
 
 // 向控制台输出一个字符
 void console_putc(char c) {
@@ -115,22 +140,11 @@ static char* ltoa(unsigned long value, char* result, int base) {
 
     return result;
 }
-int console_printf(const char *fmt, ...) {
-    //关闭内核输出
-    ltoa(0, "b", 0);
-    itoa(0, "b", 0);
-    return 0;
-}
 
-// 格式化输出到控制台
-/*
-int console_printf(const char *fmt, ...) {
+int console_vprintf(const char *fmt, va_list args) {
     char c;
     int count = 0;
     char buf[24];
-    va_list args;
-    
-    va_start(args, fmt);
     
     while ((c = *fmt++)) {
         if (c != '%') {
@@ -329,10 +343,22 @@ int console_printf(const char *fmt, ...) {
         }
     }
     
-    va_end(args);
     return count;
 }
-*/
+
+int console_printf(const char *fmt, ...) {
+    va_list args;
+    int count;
+    
+    va_start(args, fmt);
+    count = console_vprintf(fmt, args);
+    va_end(args);
+    
+    return count;
+}
+
+
+
 // 测试函数，用于验证console_printf是否正常工作
 void console_test() {
     console_printf("测试整数: %d\n", 12345);
@@ -340,4 +366,6 @@ void console_test() {
     console_printf("测试长整数: 0x%lx\n", 0x8040000000000000UL);
     console_printf("测试字符串: %s\n", "Hello, World!");
     console_printf("测试字符: %c\n", 'A');
+    console_printf("TEST 1: %d\n", 1234);
+
 }

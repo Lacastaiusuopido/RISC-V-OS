@@ -115,15 +115,10 @@ static char* ltoa(unsigned long value, char* result, int base) {
 
     return result;
 }
-int console_printf(const char *fmt, ...) {
-    //关闭内核输出
-    ltoa(0, "b", 0);
-    itoa(0, "b", 0);
-    return 0;
-}
+
 
 // 格式化输出到控制台
-/*
+
 int console_printf(const char *fmt, ...) {
     char c;
     int count = 0;
@@ -332,7 +327,7 @@ int console_printf(const char *fmt, ...) {
     va_end(args);
     return count;
 }
-*/
+
 // 测试函数，用于验证console_printf是否正常工作
 void console_test() {
     console_printf("测试整数: %d\n", 12345);

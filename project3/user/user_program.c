@@ -9,7 +9,7 @@ int main() {
     // 测试十六进制
     printf("十六进制测试: 0x%x\n", 0xabcd);
     printf("十六进制带宽度: 0x%08x\n", 0x123);
-    
+    /*
     // 测试长整数
     printf("长整数测试: %ld\n", 1234567890L);
     printf("长十六进制测试: 0x%lx\n", 0x8040000000000000UL);
@@ -46,6 +46,6 @@ int main() {
         printf("%d ", i);
     }
     printf("\n");
-    
+    */
     return 0;
 }

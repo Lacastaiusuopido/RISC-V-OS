@@ -16,7 +16,7 @@ LDFLAGS = -melf64lriscv -no-pie -nostdlib
 
 # 目标文件
 BOOT_OBJS = boot/bootasm.o boot/bootmain.o boot/uart.o boot/disk.o
-KERNEL_OBJS = kernel/entry.o kernel/main.o kernel/console.o kernel/trap.o kernel/uart.o \
+KERNEL_OBJS = kernel/entry.o kernel/main.o kernel/util.o kernel/console.o kernel/trap.o kernel/uart.o \
               kernel/syscall.o kernel/timer.o
 USER_OBJS = user/entry.o user/user_program.o user/ulib.o
 
